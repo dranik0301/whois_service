@@ -19,7 +19,7 @@ pip install -r requirements.txt
 
 ### ▶ 3. Запуск сервера
 Запускаете код с main.py
-
+или через терминал с помощью данной команды 
 ```sh
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
