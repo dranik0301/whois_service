@@ -93,5 +93,4 @@ curl -X 'GET' 'http://localhost:8000/lookup_whois?domain=example.com' -H 'accept
 pip install fastapi requests beautifulsoup4 sqlite3 uvicorn
 ```
 
----
 
