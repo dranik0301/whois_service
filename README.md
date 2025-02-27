@@ -95,6 +95,3 @@ pip install fastapi requests beautifulsoup4 sqlite3 uvicorn
 
 ---
 
-## 📜 Лицензия
-Этот проект распространяется под лицензией MIT.
-
