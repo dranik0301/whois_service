@@ -24,7 +24,7 @@ pip install -r requirements.txt
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-Теперь API доступно по адресу: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+Теперь API доступно по адресу: [http://127.0.0.1:8000/lookup_whois?domain_name=example.com]([http://127.0.0.1:8000](http://127.0.0.1:8000/lookup_whois?domain_name=example.com))
 
 ---
 
