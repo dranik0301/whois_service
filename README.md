@@ -8,7 +8,7 @@ API написан с использованием **FastAPI**, **BeautifulSoup*
 
 ### 🔧 1. Клонирование репозитория
 ```sh
-git clone [https://github.com/your-repo/whois-api.git](https://github.com/dranik0301/whois_service)
+git clone https://github.com/dranik0301/whois_service
 cd whois-api
 ```
 
