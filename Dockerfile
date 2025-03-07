@@ -1,12 +1,11 @@
-FROM python:3.11
+FROM python:3.12
 
 WORKDIR /app
 
-COPY . .
+COPY . /app
 
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+RUN pip install bottle whois
 
-EXPOSE 8000
+EXPOSE 8080
 
-ENTRYPOINT ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "main.py"]
