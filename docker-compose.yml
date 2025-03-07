@@ -1,11 +1,9 @@
-version: '3.8'
-
+version: '3.12'
 services:
-  whois-api:
+  app:
     build: .
     ports:
-      - "8000:8000"
-    volumes:
-      - .:/app
+      - "8080:8080"
     environment:
       - PYTHONUNBUFFERED=1
+    restart: always
