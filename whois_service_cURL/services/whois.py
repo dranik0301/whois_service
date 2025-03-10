@@ -92,5 +92,5 @@ def whois_data_check(domain_name: str) -> str:
         logging.error(f'Ошибка при выполнении запроса WHOIS для {domain_name}: {str(e)}')
         raise HTTPError(500, f'Произошла ошибка: {str(e)}')
 
-# domain_name = 'kaspi.kz'
+# domain_name = 'example.com'
 # whois_data_check(domain_name)
