@@ -9,8 +9,7 @@ app = Bottle()
 def lookup(domain_name):
     whois_data = whois_data_check(domain_name)
     response.content_type = 'application/json'
-
     return whois_data
 
 
-run(app, host='localhost', port=8080, debug=True, reloader=True)
+run(app, host='localhost', port=8080)
