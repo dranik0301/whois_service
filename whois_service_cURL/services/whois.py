@@ -6,8 +6,9 @@ from bottle import HTTPError
 from whois_service_cURL.models.class_models import ResponseModel, status_domainAvailable, final_info_for_domain
 from whois_service_cURL.database.save_to_db import save_to_db
 
-# from whois_service_cURL.database.create_table import create_table
-# create_table()
+from whois_service_cURL.database.create_table import create_table
+
+create_table()
 
 logging.basicConfig(level=logging.INFO)
 
@@ -49,42 +50,49 @@ def fetch_whois_data(domain_name: str) -> dict:
     # print(2, type(json_data))  # <class 'dict'>
 
 
-def whois_data_check(domain_name: str) -> str:
-    logging.info(f'Запрос WHOIS для домена: {domain_name}')
-
-    if not is_valid_domain(domain_name):
-        logging.warning(f'Некорректное доменное имя: {domain_name}')
-        raise HTTPError(400, f'{domain_name} — некорректный домен')
-
-    all_info_for_domain = fetch_whois_data(domain_name)
-
+def validate_whois_data(domain_name: str, all_info_for_domain: dict) -> ResponseModel:
     try:
-        response_obj = ResponseModel(**all_info_for_domain)
+        return ResponseModel(**all_info_for_domain)
     except Exception as e:
         logging.error(f"Ошибка валидации данных: {e}")
-        logging.warning(f"Информация о домене {domain_name} в ps.kz недостаточна")
         raise HTTPError(400, f'Информация о домене {domain_name} в ps.kz недостаточна')
+
+
+def process_whois_data(domain_name: str) -> str:
+    all_info_for_domain = fetch_whois_data(domain_name)
+    logging.info(f'Получены данные для {domain_name}')
+
+    response_obj = validate_whois_data(domain_name, all_info_for_domain)
 
     if status_domainAvailable(response_obj):
         logging.warning(f'Домен {domain_name} доступен для регистрации')
         raise HTTPError(400, f'Домен {domain_name} не зарегистрирован и доступен для регистрации')
 
     whois_data = final_info_for_domain(response_obj)
-
     if not whois_data:
         logging.error(f'Не удалось извлечь данные WHOIS для {domain_name}')
         raise HTTPError(404, f'Не удалось извлечь данные WHOIS для {domain_name}')
 
+    save_whois_data(domain_name, whois_data)
+    return f'Данные для {domain_name} успешно сохранены \n{json.dumps(whois_data, indent=4, ensure_ascii=False)}'
+
+
+def save_whois_data(domain_name: str, whois_data: dict):
     try:
         logging.info(f'Сохранение данных WHOIS для {domain_name} в БД')
         save_to_db(whois_data)
         logging.info(f'Данные успешно сохранены')
-
     except Exception as e:
         logging.error(f'Ошибка при сохранении данных WHOIS для {domain_name}: {str(e)}')
         raise HTTPError(500, f'Ошибка при сохранении данных WHOIS: {str(e)}')
 
-    return f'Данные для {domain_name} успешно сохранены \n{json.dumps(whois_data, indent=4, ensure_ascii=False)}'
 
-# domain_name = 'kaspi.ru'
+def whois_data_check(domain_name: str) -> str:
+    logging.info(f'Запрос WHOIS для домена: {domain_name}')
+    if not is_valid_domain(domain_name):
+        logging.warning(f'Некорректное доменное имя: {domain_name}')
+        raise HTTPError(400, f'{domain_name} — некорректный домен')
+    return process_whois_data(domain_name)
+
+# domain_name = 'example.kz'
 # whois_data_check(domain_name)
