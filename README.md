@@ -1,4 +1,59 @@
-# Установка зависимостей
+# Пример данных
+```json
+{
+    "data": {
+        "vitrina": {
+            "domains": {
+                "whois": {
+                    "status": {
+                        "domainAvailable": false
+                    },
+                    "data": {
+                        "domain": "example.kz",
+                        "statuses": [
+                            "clientTransferProhibited",
+                            "clientDeleteProhibited",
+                            "clientUpdateProhibited",
+                            "clientRenewProhibited"
+                        ],
+                        "currentRegistrar": "Registrar Name",
+                        "registrant": {
+                            "name": "Registrant Name",
+                            "organization": "Registrant Org",
+                            "country": "KZ",
+                            "city": "City Name",
+                            "postalCode": "000000",
+                            "street": "Street Address",
+                            "phone": "+7 000 0000000",
+                            "email": "email@example.com"
+                        },
+                        "admin": {
+                            "name": "Admin Name",
+                            "organization": "Admin Org",
+                            "country": "KZ",
+                            "city": "City Name",
+                            "postalCode": "000000",
+                            "street": "Street Address",
+                            "phone": "+7 000 0000000",
+                            "email": "email@example.com"
+                        },
+                        "nameservers": [
+                            "ns1.example.kz",
+                            "ns2.example.kz"
+                        ],
+                        "createdAt": "2000-01-01T00:00:00.000Z",
+                        "updatedAt": "2000-01-01T00:00:00.000Z",
+                        "expiresAt": "2030-01-01T00:00:00.000Z",
+                        "transferredAt": "2010-01-01T00:00:00.000Z"
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+## Установка зависимостей
 
 Перед запуском проекта установите необходимые зависимости:
 
