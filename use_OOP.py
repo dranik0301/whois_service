@@ -6,10 +6,8 @@ from bottle import run, Bottle, response, HTTPError
 from pydantic import BaseModel
 from typing import List, Optional
 
-# Настройка логирования
 logging.basicConfig(level=logging.INFO)
 
-# Константы
 ALLOWED_TLDS = {'.kz', '.com.kz', '.org.kz', '.com', '.ru', '.net', '.asia'}
 HEADERS = {
     'accept': '*/*',
@@ -22,7 +20,6 @@ API_URL = "https://console.ps.kz/vitrina/graphql"
 DB_PATH = "whois.db"
 
 
-# Модели данных
 class WhoisContactInfo(BaseModel):
     name: Optional[str]
     organization: Optional[str]
@@ -56,7 +53,6 @@ class ResponseModel(BaseModel):
     data: dict
 
 
-# Класс для работы с базой данных
 class WhoisDatabase:
     def __init__(self, db_path=DB_PATH):
         self.conn = sqlite3.connect(db_path)
@@ -103,7 +99,6 @@ class WhoisDatabase:
             logging.info(f'Данные WHOIS для {domain_name} сохранены.')
 
 
-# Класс для обработки WHOIS-запросов
 class WhoisService:
     def __init__(self):
         self.db = WhoisDatabase()
@@ -135,7 +130,6 @@ class WhoisService:
         return json.dumps(whois_data, indent=4, ensure_ascii=False)
 
 
-# Веб-сервис на Bottle
 app = Bottle()
 whois_service = WhoisService()
 
