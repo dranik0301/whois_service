@@ -5,28 +5,26 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 conn = sqlite3.connect('../whois.db')
+cursor = conn.cursor()
 
-
-def save_to_db(whois_data: dict[str:any]) -> bool:
+def save_to_db(whois_data: dict[str, any]) -> bool:
     try:
-        cursor = conn.cursor()
-
-        status_json = json.dumps(whois_data.get('statuses', None), ensure_ascii=False)
-        registrant_json = json.dumps(whois_data.get('registrant', None), ensure_ascii=False)
-        admin_contact_json = json.dumps(whois_data.get('admin', None), ensure_ascii=False)
-        server_name_json = json.dumps(whois_data.get('nameservers', None), ensure_ascii=False)
+        status_json = json.dumps(whois_data.get('statuses'), ensure_ascii=False)
+        registrant_json = json.dumps(whois_data.get('registrant'), ensure_ascii=False)
+        admin_contact_json = json.dumps(whois_data.get('admin'), ensure_ascii=False)
+        server_name_json = json.dumps(whois_data.get('nameservers'), ensure_ascii=False)
 
         values = (
-            whois_data.get('domain', None),
+            whois_data.get('domain'),
             status_json,
-            whois_data.get('currentRegistrar', None),
+            whois_data.get('currentRegistrar'),
             registrant_json,
             admin_contact_json,
             server_name_json,
-            whois_data.get('createdAt', None),
-            whois_data.get('updatedAt', None),
-            whois_data.get('expiresAt', None),
-            whois_data.get('transferredAt', None)
+            whois_data.get('createdAt'),
+            whois_data.get('updatedAt'),
+            whois_data.get('expiresAt'),
+            whois_data.get('transferredAt')
         )
 
         cursor.execute('''
@@ -40,5 +38,4 @@ def save_to_db(whois_data: dict[str:any]) -> bool:
         return True
 
     except Exception as e:
-        logging.error(f'Ошибка при сохранении данных WHOIS в БД: {str(e)}')
-        raise f'{str(e)}'
+        raise
