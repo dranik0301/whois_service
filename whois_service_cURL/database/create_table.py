@@ -10,7 +10,7 @@ def table_exists() -> bool:
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='whois_data';")
     exists = cursor.fetchone() is not None
-    return exists  
+    return exists
 
 
 def create_table():
@@ -41,5 +41,4 @@ def create_table():
     except Exception as e:
         logging.error(f'Ошибка при создании таблицы: {e}')
     finally:
-        conn.close() 
-
+        conn.close()
