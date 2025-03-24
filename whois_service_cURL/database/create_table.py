@@ -6,12 +6,11 @@ logging.basicConfig(level=logging.INFO)
 conn = sqlite3.connect('../whois.db')
 
 
-def table_exists():
+def table_exists() -> bool:
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='whois_data';")
     exists = cursor.fetchone() is not None
-    conn.close()
-    return exists
+    return exists  
 
 
 def create_table():
@@ -33,12 +32,14 @@ def create_table():
                 created TEXT,
                 last_modified TEXT,
                 expiration_date TEXT,
-                transfer_date TEXT
+                transfer_date TEXT,
+                create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
         conn.commit()
         logging.info("Таблица whois_data успешно создана.")
     except Exception as e:
-        logging.error(f'Ошибка при создании таблицы: {str(e)}')
+        logging.error(f'Ошибка при создании таблицы: {e}')
     finally:
-        conn.close()
+        conn.close() 
+
