@@ -7,6 +7,7 @@ logging.basicConfig(level=logging.INFO)
 conn = sqlite3.connect('../whois.db')
 cursor = conn.cursor()
 
+
 def save_to_db(whois_data: dict[str, any]) -> bool:
     try:
         status_json = json.dumps(whois_data.get('statuses'), ensure_ascii=False)
