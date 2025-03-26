@@ -7,9 +7,14 @@ from models.class_models import status_domainAvailable, final_info_for_domain
 
 from database.data_and_table import WhoisDatabase
 
-logging.basicConfig(level=logging.INFO)
+import os
+from dotenv import load_dotenv
 
-ALLOWED_TLDS = {'.kz', '.com.kz', '.org.kz', '.com', '.ru', '.net', '.asia'}
+load_dotenv()
+
+ALLOWED_TLDS = os.getenv("ALLOWED_TLDS")
+
+logging.basicConfig(level=logging.INFO)
 
 
 class WhoisService:
