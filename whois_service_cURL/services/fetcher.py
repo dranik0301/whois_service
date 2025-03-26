@@ -4,14 +4,20 @@ from bottle import HTTPError
 
 from models.class_models import ResponseModel
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 HEADERS = {
-    'accept': '*/*',
-    'content-type': 'application/json',
-    'origin': 'https://www.ps.kz',
-    'referer': 'https://www.ps.kz/',
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+    'accept': os.getenv("HEADERS_ACCEPT"),
+    'content-type': os.getenv("HEADERS_CONTENT_TYPE"),
+    'origin': os.getenv("HEADERS_ORIGIN"),
+    'referer': os.getenv("HEADERS_REFERER"),
+    'user-agent': os.getenv("HEADERS_USER_AGENT"),
 }
-API_URL = "https://console.ps.kz/vitrina/graphql"
+
+API_URL = os.getenv("API_URL")
 
 
 class WhoisFetcher:
