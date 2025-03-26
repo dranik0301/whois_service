@@ -4,10 +4,8 @@ from bottle import HTTPError
 
 from services.fetcher import WhoisFetcher
 from models.class_models import status_domainAvailable, final_info_for_domain
-from database.save_to_db import WhoisDatabaseSave
-from database.create_table import WhoisDatabaseCreate
 
-WhoisDatabaseCreate().create_table()
+from database.data_and_table import WhoisDatabase
 
 logging.basicConfig(level=logging.INFO)
 
@@ -18,12 +16,12 @@ class WhoisService:
 
     def __init__(self):
         self.fetcher = WhoisFetcher()
-        self.databasesave = WhoisDatabaseSave()
+        self.database = WhoisDatabase()
 
     def save_whois_data(self, domain_name: str, whois_data: dict):
         try:
             logging.info(f'Сохранение данных WHOIS для {domain_name} в БД')
-            self.databasesave.save_to_db(whois_data)
+            self.database.save_to_db(whois_data)
             logging.info(f'Данные успешно сохранены')
         except Exception as e:
             logging.error(f'Ошибка при сохранении данных WHOIS для {domain_name}: {str(e)}')
